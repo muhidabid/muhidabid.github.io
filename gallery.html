@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Muhid Abid | Photography</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f7f1e8;
+      --ink: #17120f;
+      --muted: #5e534b;
+      --line: #d8c8b8;
+      --panel: rgba(255, 255, 255, 0.76);
+      --shadow: 0 14px 30px rgba(52, 34, 23, 0.14);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Space Grotesk", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 10% 8%, #e8e2d6 0%, transparent 34%),
+        radial-gradient(circle at 88% 10%, #f2d7c8 0%, transparent 40%),
+        var(--bg);
+      line-height: 1.5;
+    }
+
+    .shell {
+      width: min(1200px, 94vw);
+      margin: 0 auto;
+      padding: 1.2rem 0 3rem;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.35rem;
+    }
+
+    .brand {
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.84rem;
+      font-weight: 700;
+    }
+
+    nav {
+      display: flex;
+      gap: 0.7rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: var(--ink);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 0.45rem 0.95rem;
+      background: rgba(255, 255, 255, 0.72);
+    }
+
+    .hero {
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      background: var(--panel);
+      padding: 1.2rem 1.35rem;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-family: "Source Serif 4", serif;
+      margin: 0 0 0.35rem;
+      line-height: 1.1;
+      font-size: clamp(1.9rem, 3.8vw, 3.1rem);
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .status {
+      margin: 1rem 0 0;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .gallery {
+      margin-top: 1rem;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.85rem;
+    }
+
+    .shot {
+      border: 0;
+      border-radius: 14px;
+      padding: 0;
+      overflow: hidden;
+      cursor: zoom-in;
+      background: #000;
+      position: relative;
+      aspect-ratio: 4 / 5;
+      box-shadow: var(--shadow);
+    }
+
+    .shot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 260ms ease;
+    }
+
+    .shot:hover img {
+      transform: scale(1.03);
+    }
+
+    .shot span {
+      position: absolute;
+      left: 0.65rem;
+      bottom: 0.65rem;
+      font-size: 0.76rem;
+      color: #fff;
+      background: rgba(0, 0, 0, 0.55);
+      padding: 0.2rem 0.5rem;
+      border-radius: 999px;
+      max-width: calc(100% - 1.3rem);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 11, 8, 0.93);
+      display: none;
+      z-index: 30;
+      padding: 1rem;
+    }
+
+    .lightbox.open {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 0.65rem;
+    }
+
+    .lightbox-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #f4eee8;
+      font-size: 0.9rem;
+    }
+
+    .lightbox-controls {
+      display: flex;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .lightbox-controls button {
+      border: 1px solid #8c7f75;
+      background: #2e2621;
+      color: #f9f3ee;
+      border-radius: 8px;
+      padding: 0.35rem 0.6rem;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+
+    .canvas {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid #4a3f38;
+      border-radius: 14px;
+      background: #1f1915;
+      touch-action: none;
+      cursor: grab;
+    }
+
+    .canvas:active {
+      cursor: grabbing;
+    }
+
+    .canvas img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      position: absolute;
+      left: 0;
+      top: 0;
+      transform-origin: center;
+      user-select: none;
+      -webkit-user-drag: none;
+      will-change: transform;
+    }
+
+    .lightbox-tip {
+      color: #cabeb2;
+      font-size: 0.85rem;
+      margin: 0;
+      text-align: center;
+    }
+
+    @media (max-width: 1000px) {
+      .gallery {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .gallery {
+        grid-template-columns: 1fr;
+      }
+
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <div class="brand">Muhid Abid</div>
+      <nav aria-label="Primary">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="gallery.html">Photography</a>
+        <a class="nav-link" href="FastSLAM.html">FastSLAM Project</a>
+        <a class="nav-link" href="OtherProjects.html">Other Projects</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <h1>Photography Gallery</h1>
+      <p class="subtitle">Drop image files into the <code>photos/</code> folder and this page will auto-load them.</p>
+      <p class="status" id="status">Loading images...</p>
+    </section>
+
+    <section class="gallery" id="gallery" aria-label="Photography gallery"></section>
+  </div>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lightbox-top">
+      <span id="lightboxTitle">Photo</span>
+      <div class="lightbox-controls">
+        <button type="button" id="zoomOut" aria-label="Zoom out">-</button>
+        <button type="button" id="zoomIn" aria-label="Zoom in">+</button>
+        <button type="button" id="zoomReset" aria-label="Reset zoom">Reset</button>
+        <button type="button" id="closeLightbox" aria-label="Close image viewer">Close</button>
+      </div>
+    </div>
+    <div class="canvas" id="canvas">
+      <img id="lightboxImg" alt="Expanded gallery image">
+    </div>
+    <p class="lightbox-tip">Use mouse wheel or +/- to zoom. Drag when zoomed in.</p>
+  </div>
+
+  <script>
+    const GALLERY_CONFIG = {
+      owner: "muhidabid",
+      repo: "muhidabid.github.io",
+      branch: "main",
+      folder: "photos"
+    };
+
+    const IMAGE_REGEX = /\.(avif|gif|jpe?g|png|webp)$/i;
+    const galleryEl = document.getElementById("gallery");
+    const statusEl = document.getElementById("status");
+
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightboxImg");
+    const lightboxTitle = document.getElementById("lightboxTitle");
+    const canvas = document.getElementById("canvas");
+    const zoomInBtn = document.getElementById("zoomIn");
+    const zoomOutBtn = document.getElementById("zoomOut");
+    const zoomResetBtn = document.getElementById("zoomReset");
+    const closeBtn = document.getElementById("closeLightbox");
+
+    let scale = 1;
+    let translateX = 0;
+    let translateY = 0;
+    let dragging = false;
+    let startX = 0;
+    let startY = 0;
+
+    function clamp(value, min, max) {
+      return Math.min(max, Math.max(min, value));
+    }
+
+    function applyTransform() {
+      lightboxImg.style.transform = "translate(" + translateX + "px, " + translateY + "px) scale(" + scale + ")";
+    }
+
+    function resetView() {
+      scale = 1;
+      translateX = 0;
+      translateY = 0;
+      applyTransform();
+    }
+
+    function zoomBy(delta) {
+      scale = clamp(scale + delta, 1, 4.5);
+      if (scale === 1) {
+        translateX = 0;
+        translateY = 0;
+      }
+      applyTransform();
+    }
+
+    function openLightbox(src, title) {
+      lightboxImg.src = src;
+      lightboxTitle.textContent = title;
+      lightbox.classList.add("open");
+      lightbox.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      resetView();
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove("open");
+      lightbox.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+      lightboxImg.src = "";
+    }
+
+    function inferRepo() {
+      const host = window.location.hostname || "";
+      const pathParts = window.location.pathname.split("/").filter(Boolean);
+      const inferredOwner = host.endsWith(".github.io") ? host.split(".")[0] : "";
+      const inferredRepo = pathParts.length > 1 ? pathParts[0] : (inferredOwner ? inferredOwner + ".github.io" : "");
+
+      return {
+        owner: GALLERY_CONFIG.owner || inferredOwner,
+        repo: GALLERY_CONFIG.repo || inferredRepo,
+        branch: GALLERY_CONFIG.branch || "main",
+        folder: GALLERY_CONFIG.folder || "photos"
+      };
+    }
+
+    function fileNameNoExt(name) {
+      return name.replace(/\.[^/.]+$/, "");
+    }
+
+    function renderGallery(images) {
+      galleryEl.innerHTML = "";
+      images.forEach((img) => {
+        const button = document.createElement("button");
+        button.className = "shot";
+        button.type = "button";
+        button.dataset.full = img.url;
+        button.dataset.title = img.title;
+
+        const image = document.createElement("img");
+        image.src = img.url;
+        image.alt = img.title;
+        image.loading = "lazy";
+
+        const caption = document.createElement("span");
+        caption.textContent = img.title;
+
+        button.appendChild(image);
+        button.appendChild(caption);
+        galleryEl.appendChild(button);
+      });
+    }
+
+    async function loadImages() {
+      const repo = inferRepo();
+      const api = "https://api.github.com/repos/" + repo.owner + "/" + repo.repo + "/contents/" + repo.folder + "?ref=" + repo.branch;
+
+      try {
+        const response = await fetch(api);
+        if (!response.ok) {
+          throw new Error("GitHub API returned " + response.status);
+        }
+
+        const entries = await response.json();
+        const images = entries
+          .filter((item) => item.type === "file" && IMAGE_REGEX.test(item.name))
+          .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }))
+          .map((item) => ({
+            title: fileNameNoExt(item.name),
+            url: item.download_url
+          }));
+
+        if (!images.length) {
+          statusEl.textContent = "No images found in /photos yet. Add files and push to GitHub.";
+          return;
+        }
+
+        renderGallery(images);
+        statusEl.textContent = images.length + " image(s) loaded from /photos.";
+      } catch (error) {
+        statusEl.textContent = "Could not load photos folder automatically. Check repo owner/repo/branch config in gallery.html.";
+      }
+    }
+
+    galleryEl.addEventListener("click", (event) => {
+      const shot = event.target.closest(".shot");
+      if (!shot) {
+        return;
+      }
+      openLightbox(shot.dataset.full, shot.dataset.title);
+    });
+
+    zoomInBtn.addEventListener("click", () => zoomBy(0.25));
+    zoomOutBtn.addEventListener("click", () => zoomBy(-0.25));
+    zoomResetBtn.addEventListener("click", resetView);
+    closeBtn.addEventListener("click", closeLightbox);
+
+    lightbox.addEventListener("click", (event) => {
+      if (event.target === lightbox) {
+        closeLightbox();
+      }
+    });
+
+    window.addEventListener("keydown", (event) => {
+      if (!lightbox.classList.contains("open")) {
+        return;
+      }
+
+      if (event.key === "Escape") {
+        closeLightbox();
+      } else if (event.key === "+" || event.key === "=") {
+        zoomBy(0.25);
+      } else if (event.key === "-") {
+        zoomBy(-0.25);
+      }
+    });
+
+    canvas.addEventListener("wheel", (event) => {
+      if (!lightbox.classList.contains("open")) {
+        return;
+      }
+      event.preventDefault();
+      zoomBy(event.deltaY < 0 ? 0.2 : -0.2);
+    }, { passive: false });
+
+    canvas.addEventListener("pointerdown", (event) => {
+      if (scale <= 1) {
+        return;
+      }
+      dragging = true;
+      startX = event.clientX - translateX;
+      startY = event.clientY - translateY;
+      canvas.setPointerCapture(event.pointerId);
+    });
+
+    canvas.addEventListener("pointermove", (event) => {
+      if (!dragging || scale <= 1) {
+        return;
+      }
+      const maxOffsetX = canvas.clientWidth * 0.5 * (scale - 1);
+      const maxOffsetY = canvas.clientHeight * 0.5 * (scale - 1);
+      translateX = clamp(event.clientX - startX, -maxOffsetX, maxOffsetX);
+      translateY = clamp(event.clientY - startY, -maxOffsetY, maxOffsetY);
+      applyTransform();
+    });
+
+    canvas.addEventListener("pointerup", () => {
+      dragging = false;
+    });
+
+    canvas.addEventListener("pointercancel", () => {
+      dragging = false;
+    });
+
+    loadImages();
+  </script>
+</body>
+</html>
