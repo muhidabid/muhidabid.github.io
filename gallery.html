@@ -246,7 +246,7 @@
 
     <section class="hero">
       <h1>Photography Gallery</h1>
-      <p class="subtitle">Drop image files into the <code>photos/</code> folder and this page will auto-load them.</p>
+      <p class="subtitle">A curated collection of my photography.</p>
       <p class="status" id="status">Loading images...</p>
     </section>
 
@@ -321,9 +321,9 @@
       applyTransform();
     }
 
-    function openLightbox(src, title) {
+    function openLightbox(src) {
       lightboxImg.src = src;
-      lightboxTitle.textContent = title;
+      lightboxTitle.textContent = "Photo";
       lightbox.classList.add("open");
       lightbox.setAttribute("aria-hidden", "false");
       document.body.style.overflow = "hidden";
@@ -362,7 +362,6 @@
         button.className = "shot";
         button.type = "button";
         button.dataset.full = img.url;
-        button.dataset.title = img.title;
 
         const image = document.createElement("img");
         image.src = img.url;
@@ -394,14 +393,14 @@
           }));
 
         if (!images.length) {
-          statusEl.textContent = "No images found in /photos yet. Add files and push to GitHub.";
+          statusEl.textContent = "No photos available right now.";
           return;
         }
 
         renderGallery(images);
         statusEl.textContent = images.length + " image(s) loaded from /photos.";
       } catch (error) {
-        statusEl.textContent = "Could not load photos folder automatically. Check repo owner/repo/branch config in gallery.html.";
+        statusEl.textContent = "Photos are temporarily unavailable.";
       }
     }
 
@@ -410,7 +409,7 @@
       if (!shot) {
         return;
       }
-      openLightbox(shot.dataset.full, shot.dataset.title);
+      openLightbox(shot.dataset.full);
     });
 
     zoomInBtn.addEventListener("click", () => zoomBy(0.25));
