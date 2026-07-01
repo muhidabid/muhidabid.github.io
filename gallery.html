@@ -355,18 +355,50 @@
       return name.replace(/\.[^/.]+$/, "");
     }
 
+    function createPlaceholderImage() {
+      return "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='800' viewBox='0 0 800 800'%3E%3Crect width='800' height='800' fill='%23f5eefc'/%3E%3Crect x='48' y='48' width='704' height='704' rx='24' fill='none' stroke='%23d7c3f4' stroke-width='8'/%3E%3Cpath d='M220 560h360' stroke='%23977fd5' stroke-width='16' stroke-linecap='round'/%3E%3Cpath d='M255 430l98-132 86 108 82-132 98 174' fill='none' stroke='%236d41c9' stroke-width='18' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E";
+    }
+
+    function loadImage(img) {
+      if (!img.dataset.src) {
+        return;
+      }
+
+      img.src = img.dataset.src;
+      delete img.dataset.src;
+    }
+
     function renderGallery(images) {
       galleryEl.innerHTML = "";
-      images.forEach((img) => {
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            return;
+          }
+
+          loadImage(entry.target);
+          obs.unobserve(entry.target);
+        });
+      }, { rootMargin: "180px 0px" });
+
+      images.forEach((img, index) => {
         const button = document.createElement("button");
         button.className = "shot";
         button.type = "button";
         button.dataset.full = img.url;
 
         const image = document.createElement("img");
-        image.src = img.url;
         image.alt = img.title;
         image.loading = "lazy";
+        image.decoding = "async";
+        image.dataset.src = img.url;
+        image.src = createPlaceholderImage();
+
+        if (index < 6) {
+          loadImage(image);
+        } else {
+          observer.observe(image);
+        }
 
         button.appendChild(image);
         galleryEl.appendChild(button);
