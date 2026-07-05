@@ -3,10 +3,101 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="refresh" content="0; url=OTHERPROJECTS.HTML">
-  <title>Other Projects</title>
+  <title>Muhid Abid | Other Projects</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f4f0ff;
+      --panel: #fcfaff;
+      --ink: #1e1631;
+      --muted: #665b83;
+      --line: #ddd2f3;
+      --accent: #7e5ed2;
+      --shadow: 0 14px 30px rgba(46, 22, 95, 0.1);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Space Grotesk", sans-serif;
+      color: var(--ink);
+      background: linear-gradient(135deg, #f6f0ff 0%, #fefcff 100%);
+      line-height: 1.6;
+    }
+    .shell { width: min(1000px, 92vw); margin: 0 auto; padding: 1.2rem 0 3rem; }
+    header { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 1.4rem; }
+    .brand { text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.84rem; font-weight: 700; }
+    nav { display: flex; gap: 0.7rem; flex-wrap: wrap; }
+    .nav-link { text-decoration: none; color: var(--ink); border: 1px solid var(--line); border-radius: 999px; padding: 0.45rem 0.9rem; background: rgba(255,255,255,0.8); }
+    .hero { background: var(--panel); border: 1px solid var(--line); border-radius: 24px; padding: 1.2rem 1.3rem; box-shadow: var(--shadow); margin-bottom: 1rem; }
+    h1, h2 { font-family: "Source Serif 4", serif; margin: 0; line-height: 1.15; }
+    h1 { font-size: clamp(1.8rem, 3vw, 2.6rem); margin-bottom: 0.45rem; }
+    .lede { margin: 0; color: var(--muted); max-width: 64ch; }
+    .project-list { display: grid; gap: 0.8rem; }
+    .project-card { background: rgba(255,255,255,0.9); border: 1px solid var(--line); border-radius: 18px; padding: 1rem 1.1rem; box-shadow: 0 8px 18px rgba(46,22,95,0.06); }
+    .project-card h3 { margin: 0 0 0.35rem; font-size: 1.12rem; }
+    .project-card p { margin: 0.2rem 0 0; color: var(--muted); }
+    .meta { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 0.6rem; font-size: 0.9rem; }
+    .pill { border: 1px solid var(--line); border-radius: 999px; padding: 0.28rem 0.6rem; background: #fff; color: var(--ink); }
+    .project-link { display: inline-block; margin-top: 0.7rem; color: var(--accent); font-weight: 600; text-decoration: none; }
+    .project-link:hover { text-decoration: underline; }
+    @media (max-width: 640px) { header { flex-direction: column; align-items: flex-start; } }
+  </style>
 </head>
 <body>
-  <p>Redirecting…</p>
+  <div class="shell">
+    <header>
+      <div class="brand">Muhid Abid</div>
+      <nav aria-label="Primary">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="gallery.html">Photography</a>
+        <a class="nav-link" href="FastSLAM.html">FastSLAM Project</a>
+        <a class="nav-link" href="OTHERPROJECTS.HTML">Other Projects</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <h1>Projects and side work</h1>
+      <p class="lede">A selection of projects I’ve built and contributed to, with brief descriptions and links where available.</p>
+    </section>
+
+    <section class="project-list" aria-label="Project list">
+      <article class="project-card">
+        <h3>Data Streaming Platform</h3>
+        <p>Built a streaming-focused application to ingest and display live data flows with a focus on reliability and real-time updates.</p>
+        <div class="meta"><span class="pill">Streaming</span><span class="pill">Backend</span><span class="pill">Real-time</span></div>
+        <a class="project-link" href="https://github.com/muhidabid" target="_blank" rel="noreferrer">View related work on GitHub ↗</a>
+      </article>
+
+      <article class="project-card">
+        <h3>CAPTCHA and Verification Systems</h3>
+        <p>Developed verification and CAPTCHA-style components focused on usability, accessibility, and secure user validation.</p>
+        <div class="meta"><span class="pill">Security</span><span class="pill">Frontend</span><span class="pill">UX</span></div>
+        <a class="project-link" href="https://github.com/muhidabid" target="_blank" rel="noreferrer">View related work on GitHub ↗</a>
+      </article>
+
+      <article class="project-card">
+        <h3>Requirements Management Application</h3>
+        <p>Created a requirements-tracking app to organize project needs, approvals, and workflow states in a structured system.</p>
+        <div class="meta"><span class="pill">Product</span><span class="pill">Workflow</span><span class="pill">Full stack</span></div>
+        <a class="project-link" href="https://github.com/muhidabid" target="_blank" rel="noreferrer">View related work on GitHub ↗</a>
+      </article>
+
+      <article class="project-card">
+        <h3>Interactive Math Function Plotter</h3>
+        <p>Built a React-based graphing tool that lets users enter equations, tweak variables, and export the visible plot as an image.</p>
+        <div class="meta"><span class="pill">React</span><span class="pill">Math tooling</span><span class="pill">2024</span></div>
+        <a class="project-link" href="https://lhapdf-eval-gsoc24-9cd0838d1af5bf126928152d60542c429d148b790f11.gitlab.io/" target="_blank" rel="noreferrer">View project ↗</a>
+      </article>
+
+      <article class="project-card">
+        <h3>Sentiment Analysis on Live Tweets</h3>
+        <p>Created a Python-based analysis pipeline to explore public sentiment across regions using NLP and data mining techniques.</p>
+        <div class="meta"><span class="pill">Python</span><span class="pill">NLP</span><span class="pill">2022</span></div>
+        <a class="project-link" href="https://www.linkedin.com/feed/update/urn:li:activity:6814461216484859904/?updateEntityUrn=urn%3Ali%3Afs_feedUpdate%3A%28V2%2Curn%3Ali%3Aactivity%3A6814461216484859904%29" target="_blank" rel="noreferrer">See project update ↗</a>
+      </article>
+    </section>
+  </div>
 </body>
 </html>
